@@ -20,15 +20,6 @@ AddEventHandler('esx:setJob', function(job)
     ESX.PlayerData.job = job
 end)
 
-Citizen.CreateThread(function()
-    while true do
-        Citizen.Wait(0)
-        if IsControlJustReleased(0, Config.Keybind) and ESX.PlayerData.job and ESX.PlayerData.job.name == 'police' then
-            SickWarrantsMenu()
-        end
-    end
-end)
-
 function SickWarrantsMenu()
 
     ESX.UI.Menu.CloseAll()
@@ -88,22 +79,6 @@ AddEventHandler('SickWarrantsMenu:optionList', function(args)
         ShowCreateWarrantMenu()
     end
 end)
-
-function IsPlayerJobCop()	
-	if not PlayerData then return false end
-	if not PlayerData.job then return false end
-	for k,v in pairs(Config.Jobs) do
-		if PlayerData.job.name == v then return true end
-	end
-	return false
-end
-
-function HasPlayerJob(jobName)	
-	if not PlayerData then return false end
-	if not PlayerData.job then return false end
-	if PlayerData.job.name == jobName then return true end
-	return false
-end
 
 RegisterNetEvent('sick-warrants:nameCallbackEvent')
 AddEventHandler('sick-warrants:nameCallbackEvent', function(name)
