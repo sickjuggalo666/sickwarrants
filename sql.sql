@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS `warrants` ( 
 
-    `id`                  varchar(100) NOT NULL,
+    `id`                  varchar(100) NOT NULL AUTO_INCREMENT,
     `name`                varchar(100) NOT NULL DEFAULT '{}',
     `bday`                varchar(100) NOT NULL DEFAULT '{}',
     `reason`              LONGTEXT NOT NULL DEFAULT '{}',

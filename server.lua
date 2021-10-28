@@ -4,10 +4,11 @@ TriggerEvent('esx:getSharedObject', function(obj)
     ESX = obj
 end)
 
-ESX.RegisterServerCallback('sick-warrants:getActive', function(cb)
-    MySQL.Async.fetchAll('SELECT * FROM warrants WHERE name = @name, bday = @bday, AND reason = @reason',{ 
-        [@name] = name}, 
-    function(results)
+ESX.RegisterServerCallback('sick-warrants:getActive', function(src,cb)
+    MySQL.Async.fetchAll('SELECT * FROM warrants WHERE name = @name',
+    { 
+        [@name] = name
+    },function(results)
         if results[1] then
             local data = {
                 name    = results[1].name, 
@@ -22,18 +23,18 @@ ESX.RegisterServerCallback('sick-warrants:getActive', function(cb)
 end)
 
 RegisterServerEvent('sickwarrant:createWarrant')
-AddEventHandler('sickwarrant:createWarrant', function(name,bday,reason)
+AddEventHandler('sickwarrant:createWarrant', function(src,name,bday,reason)
     MySQL.Async.insert('INSERT INTO warrants (name,bday,reason) VALUES (@name,@bday,@reason)',
         {
             ['@name']      = name,
-            ['@bday']      = bday,
+            ['@bday']      = bday, 
             ['@reason']    = reason,
         }
     end)
 end)
 
 RegisterServerEvent('sickwarrants:DeleteWarrant')
-AddEventHandler('sickwarrants:DeleteWarrant', function(name)
+AddEventHandler('sickwarrants:DeleteWarrant', function(srcname)
     MySQL.Async.execute('DELETE * FROM warrants WHERE name = @name', 
         {
             ['@name'] = name
@@ -41,17 +42,17 @@ AddEventHandler('sickwarrants:DeleteWarrant', function(name)
     end)
 end)
 
-ESX.RegisterServerCallback('sickwarrant:CheckBeforeDelete', function(cb)
+ESX.RegisterServerCallback('sickwarrant:CheckBeforeDelete', function(src,cb)
     MySQL.Async.fetchAll('SELECT name FROM warrants WHERE name = @name',
         {
             ['@name'] = name
         } function(results)
         if results[1] then
-            local name = 
+            local check = 
                 {
                     name = result[1].name
                 }
-            cb(name)
+            cb(check)
         end
     end)
 end)

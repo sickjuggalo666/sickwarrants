@@ -1,16 +1,19 @@
 ESX = nil
 
 Citizen.CreateThread(function()
-    while ESX == nil do
-        TriggerEvent('esx:getSharedObject', function(obj)
-            ESX = obj
-        end)
-        Citizen.Wait(0)
-    end
+	while ESX == nil do
+		TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
+		Citizen.Wait(0)
+	end
+
+	while ESX.GetPlayerData().job == nil do
+		Citizen.Wait(10)
+	end
+
+	ESX.PlayerData = ESX.GetPlayerData()
 end)
 
 function SickWarrantsMenu()
-
     ESX.UI.Menu.CloseAll()
 
         local WarrantMenu = {
@@ -53,7 +56,8 @@ function SickWarrantsMenu()
             },
         }
         exports['zf_context']:openMenu(WarrantMenu)
-end
+    end
+end)
 
 RegisterNetEvent('SickWarrantsMenu:optionList')
 AddEventHandler('SickWarrantsMenu:optionList', function(args)
