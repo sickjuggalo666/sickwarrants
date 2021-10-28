@@ -56,8 +56,7 @@ function SickWarrantsMenu()
             },
         }
         exports['zf_context']:openMenu(WarrantMenu)
-    end
-end)
+end
 
 RegisterNetEvent('SickWarrantsMenu:optionList')
 AddEventHandler('SickWarrantsMenu:optionList', function(args)
@@ -109,7 +108,7 @@ function SickWarrantList()
     ESX.TriggerServerCallback('sick-warrants:getActive', function(data)
         if data ~= nil then
             local number = Config.Dispatch
-                SickWarrantMessage('[ACTIVE WARRANTS]:':format(data.name..':'..data.reason), number)
+                SickWarrantMessage('[ACTIVE WARRANTS]:',sting.format(data.name..':'..data.reason))
         else
             if Config.Notifications == "esx" then
                 ESX.ShowNotification(Config.NoWarrants)
@@ -125,9 +124,9 @@ end
 function SickWarrantMessage(msg, number)
     PlaySoundFrontend(-1, "Menu_Accept", "Phone_SoundSet_Default", true)
     if Config.Notifications == "esx" then
-        ESX.ShowNotification('New Message':format(number))
+        ESX.ShowNotification('New Message:',format(number))
     elseif Config.Notifications == "mythic" then
-        exports['mythic_notify']:DoHudText('inform', 'New Message':format(number))
+        exports['mythic_notify']:DoHudText('inform', 'New Message:',format(number))
     elseif Config.Notifications == "custom" then
         -- Enter custom Notifications here
     end
@@ -157,20 +156,21 @@ function DeleteWarrant()
     ESX.TriggerServerCallback('sickwarrant:CheckBeforeDelete', function(name) 
         if name ~= nil then
             TriggerServerEvent('sickwarrants:DeleteWarrant', name)
-            if Config.Notifications == "esx" then
-                ESX.ShowNotification(Config.DeletedWarrant)
-            elseif Config.Notifications == "mythic" then
-                exports['mythic_notify']:DoHudText('error', Config.DeletedWarrant)
-            elseif Config.Notifications == "custom" then
-                -- Enter custom Notifications here
-            end
-        else
-            if Config.Notifications == "esx" then
-                ESX.ShowNotification(Config.NoWarrantWithName)
-            elseif Config.Notifications == "mythic" then
-                exports['mythic_notify']:DoHudText('error', Config.NoWarrantWithName)
-            elseif Config.Notifications == "custom" then
-                -- Enter custom Notifications here
+                if Config.Notifications == "esx" then
+                    ESX.ShowNotification(Config.DeletedWarrant)
+                elseif Config.Notifications == "mythic" then
+                    exports['mythic_notify']:DoHudText('error', Config.DeletedWarrant)
+                elseif Config.Notifications == "custom" then
+                    -- Enter custom Notifications here
+                end
+            else
+                if Config.Notifications == "esx" then
+                    ESX.ShowNotification(Config.NoWarrantWithName)
+                elseif Config.Notifications == "mythic" then
+                    exports['mythic_notify']:DoHudText('error', Config.NoWarrantWithName)
+                elseif Config.Notifications == "custom" then
+                    -- Enter custom Notifications here
+                end
             end
         end)
     end

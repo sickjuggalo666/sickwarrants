@@ -7,7 +7,7 @@ end)
 ESX.RegisterServerCallback('sick-warrants:getActive', function(src,cb)
     MySQL.Async.fetchAll('SELECT * FROM warrants WHERE name = @name',
     { 
-        [@name] = name
+        ['@name'] = name
     },function(results)
         if results[1] then
             local data = {
@@ -29,7 +29,7 @@ AddEventHandler('sickwarrant:createWarrant', function(src,name,bday,reason)
             ['@name']      = name,
             ['@bday']      = bday, 
             ['@reason']    = reason,
-        }
+        },function()
     end)
 end)
 
@@ -38,7 +38,7 @@ AddEventHandler('sickwarrants:DeleteWarrant', function(srcname)
     MySQL.Async.execute('DELETE * FROM warrants WHERE name = @name', 
         {
             ['@name'] = name
-        }
+        },function()
     end)
 end)
 
@@ -46,7 +46,7 @@ ESX.RegisterServerCallback('sickwarrant:CheckBeforeDelete', function(src,cb)
     MySQL.Async.fetchAll('SELECT name FROM warrants WHERE name = @name',
         {
             ['@name'] = name
-        } function(results)
+        }, function(results)
         if results[1] then
             local check = 
                 {
