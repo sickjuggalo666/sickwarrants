@@ -13,7 +13,7 @@ function SickWarrantsMenu()
 
     ESX.UI.Menu.CloseAll()
 
-        local SickWarrantsMenu = {
+        local WarrantMenu = {
             {
                 id = 1,
                 header = 'N.C.I.C. Check',
@@ -52,7 +52,7 @@ function SickWarrantsMenu()
                 }
             },
         }
-        exports['zf_context']:openMenu(SickWarrantsMenu)
+        exports['zf_context']:openMenu(WarrantMenu)
 end
 
 RegisterNetEvent('SickWarrantsMenu:optionList')
