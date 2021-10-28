@@ -4,19 +4,54 @@ TriggerEvent('esx:getSharedObject', function(obj)
     ESX = obj
 end)
 
-ESX.RegisterServerCallback('sick-warrants:getActive', function(source,cb,warrant)
-	local _source = source
-	local xPlayer = ESX.GetPlayerFromId(source)
-	if xPlayer ~= nil then
-        MySQL.Async.fetchAll("SELECT * FROM `users` WHERE identifer = @identifer AND warrant = @warrant", { 
-            [@identifer] = xPlayer.identifer, 
-            [@warrant] = 1 
-        }, function(result)
-            if result[1] then
-                cb(result[1].warrant)
-            else
-                cb(nil)
-            end
-        end)
-    end
+ESX.RegisterServerCallback('sick-warrants:getActive', function(cb)
+    MySQL.Async.fetchAll('SELECT * FROM warrants WHERE name = @name, bday = @bday, AND reason = @reason',{ 
+        [@name] = name}, 
+    function(results)
+        if results[1] then
+            local data = {
+                name    = results[1].name, 
+                reason  = results[1].reason,
+                bday    = results[1].bday
+            }
+            cb(data)
+        else
+            cb(nil)
+        end
+    end)
+end)
+
+RegisterServerEvent('sickwarrant:createWarrant')
+AddEventHandler('sickwarrant:createWarrant', function(name,bday,reason)
+    MySQL.Async.insert('INSERT INTO warrants (name,bday,reason) VALUES (@name,@bday,@reason)',
+        {
+            ['@name']      = name,
+            ['@bday']      = bday,
+            ['@reason']    = reason,
+        }
+    end)
+end)
+
+RegisterServerEvent('sickwarrants:DeleteWarrant')
+AddEventHandler('sickwarrants:DeleteWarrant', function(name)
+    MySQL.Async.execute('DELETE * FROM warrants WHERE name = @name', 
+        {
+            ['@name'] = name
+        }
+    end)
+end)
+
+ESX.RegisterServerCallback('sickwarrant:CheckBeforeDelete', function(cb)
+    MySQL.Async.fetchAll('SELECT name FROM warrants WHERE name = @name',
+        {
+            ['@name'] = name
+        } function(results)
+        if results[1] then
+            local name = 
+                {
+                    name = result[1].name
+                }
+            cb(name)
+        end
+    end)
 end)
