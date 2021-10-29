@@ -13,7 +13,7 @@ Citizen.CreateThread(function()
 	ESX.PlayerData = ESX.GetPlayerData()
 end)
 
-function SickWarrantsMenu()
+function WarrantMenu()
     ESX.UI.Menu.CloseAll()
 
         local WarrantMenu = {
@@ -55,6 +55,7 @@ function SickWarrantsMenu()
                 }
             },
         }
+
         exports['zf_context']:openMenu(WarrantMenu)
 end
 
@@ -152,16 +153,16 @@ function DeleteWarrant()
             -- Enter custom Notifications here
         end
     else
-      local name = dialog[1].input
-    ESX.TriggerServerCallback('sickwarrant:CheckBeforeDelete', function(name) 
-        if name ~= nil then
-            TriggerServerEvent('sickwarrants:DeleteWarrant', name)
-                if Config.Notifications == "esx" then
-                    ESX.ShowNotification(Config.DeletedWarrant)
-                elseif Config.Notifications == "mythic" then
-                    exports['mythic_notify']:DoHudText('error', Config.DeletedWarrant)
-                elseif Config.Notifications == "custom" then
-                    -- Enter custom Notifications here
+        local name = dialog[1].input
+        ESX.TriggerServerCallback('sickwarrant:CheckBeforeDelete', function(name) 
+            if name ~= nil then
+                TriggerServerEvent('sickwarrants:DeleteWarrant', name)
+                    if Config.Notifications == "esx" then
+                        ESX.ShowNotification(Config.DeletedWarrant)
+                    elseif Config.Notifications == "mythic" then
+                        exports['mythic_notify']:DoHudText('error', Config.DeletedWarrant)
+                    elseif Config.Notifications == "custom" then
+                        -- Enter custom Notifications here
                 end
             else
                 if Config.Notifications == "esx" then
