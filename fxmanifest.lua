@@ -7,12 +7,12 @@ version '1.1.4'
 
 sever_scripts {
     '@mysql-async/lib/MySQL.lua',
-    'server.lua',
+    'server/server.lua',
     'config.lua'
 }
 
 client_scipts {
-    'client.lua',
+    'client/client.lua',
     'config.lua'
 }
 
