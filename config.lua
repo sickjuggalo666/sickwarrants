@@ -8,4 +8,4 @@ Config.NoWarrants       = "No Current Active Warrants!"
 Config.InvalidName      = "Please Enter Valid Name!"
 Config.DeletedWarrant   = "Successful Removal Of Warrant!"
 Config.NoWarrantWithName = "No Warrants With That Name!"
-Config.Keybind = '166'
+Config.InvalidInputs           = "Dialog Bars Cannot be Empty!"
