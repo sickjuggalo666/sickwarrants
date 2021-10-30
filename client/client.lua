@@ -8,36 +8,50 @@ Citizen.CreateThread(function()
         Citizen.Wait(1)
     end
 end)
-RegisterNetEvent('sickwarrants:warrantMenu')
-AddEventHandler('sickwarrants:warrantMenu', function()
+
+--RegisterNetEvent('sickwarrants:warrantMenu')
+--AddEventHandler('sickwarrants:warrantMenu', function()
+RegisterCommand('warrant', function()
     ESX.UI.Menu.CloseAll()
 
     local WarrantMenu = {
-        {id = 1, header = 'N.C.I.C. Check'}, {
-            id = 2,
+        {
+            id = 0,
+            header = 'N.C.I .C. Check'
+        },
+        {
+            id = 1,
             header = '📲 List Warrants',
             txt = 'Get a List Of Warrants',
             params = {
                 event = 'SickWarrantsMenu:optionList',
-                args = {selection = 'list_warrants'}
+                args = {
+                    selection = 'list_warrants'
+                }
             }
-        }, {
-            id = 3,
+        },
+        {
+            id = 2,
             header = '🔒 Create Warrant',
             txt = 'Create New Warrant',
             params = {
                 event = 'SickWarrantsMenu:optionList',
-                args = {selection = 'create_warrants'}
+                args = {
+                    selection = 'create_warrants'
+                }
             }
-        }, {
-            id = 4,
+        },
+        {
+            id = 3,
             header = '🔎 Delete Warrant',
             txt = 'End Active Warrant',
             params = {
                 event = 'SickWarrantsMenu:optionList',
-                args = {selection = 'delete'}
+                args = {
+                    selection = 'delete'
+                }
             }
-        }
+        },
     }
 
     exports['zf_context']:openMenu(WarrantMenu)
@@ -48,7 +62,7 @@ AddEventHandler('SickWarrantsMenu:optionList', function(args)
     if args.selection == 'delete' then
         DeleteWarrant()
     elseif args.selection == 'list_warrants' then
-        SickWarrantList()
+        WarrantList()
     elseif args.selection == 'create_warrants' then
         ShowCreateWarrantMenu()
     end
@@ -59,20 +73,28 @@ function ShowCreateWarrantMenu()
         header = "Create Warrant",
         rows = {
             id = 0,
-            txt = "Enter Name",
+            txt = "First Name",
         },
         {
             id = 1,
+            txt = "Last Name"
+        },
+        {
+            id = 2,
+            txt = "Case #",
+        },
+        {
+            id = 3,
             txt = "Birth Date",
         },
         {
-            id = 2,txt = "Reason"
+            id = 4,
+            txt = "Reason"
         }
     })
 
     if dialog ~= nil then
-        if dialog[1].input == nil or dialog[2].input == nil or dialog[3].input ==
-            nil then
+        if dialog[1].input == nil or dialog[2].input == nil then
             if Config.Notifications == "esx" then
                 ESX.ShowNotification(Config.InvalidInputs)
             elseif Config.Notifications == "mythic" then
@@ -81,19 +103,22 @@ function ShowCreateWarrantMenu()
                 -- Enter custom Notifications here
             end
         else
-            name = dialog[1].input
-            bday = dialog[2].input
-            reason = dialog[3].input
-            TriggerServerEvent('sickwarrants:createWarrant', name, bday, reason)
+            firstname = dialog[1].input
+            lastname  = dialog[2].input
+            case      = dialog[3].input
+            bday = dialog[4].input
+            reason = dialog[5].input
+            TriggerServerEvent('sickwarrants:createWarrant', firtsname, lastname, case, bday, reason)
         end
     end
 end
 
-function SickWarrantList()
+function WarrantList()
     ESX.TriggerServerCallback('sickwarrants:getActive', function(data)
         if data ~= nil then
             local number = Config.Dispatch
-            WarrantMessage('[ACTIVE WARRANTS]:',string.format(data.name .. ':' .. data.reason))
+            local msg = string.format('[WARRANTS]:',data.name..' '..data.lastname..':' ..data.case..':'..data.reason)
+            WarrantMessage(msg,number)
         else
             if Config.Notifications == "esx" then
                 ESX.ShowNotification(Config.NoWarrants)
@@ -109,7 +134,7 @@ end
 function WarrantMessage(msg, number)
     PlaySoundFrontend(-1, "Menu_Accept", "Phone_SoundSet_Default", true)
     if Config.Notifications == "esx" then
-        ESX.ShowNotification('New Message:', string.format('New Message From:',number))
+        ESX.ShowNotification(string.format('New Message From:',number))
     elseif Config.Notifications == "mythic" then
         exports['mythic_notify']:DoHudText('inform',string.format('New Message:',number))
     elseif Config.Notifications == "custom" then
@@ -121,7 +146,11 @@ end
 function DeleteWarrant()
     local dialog = exports['zf_dialog']:DialogInput({
         header = "Delete Active Warrant?",
-        rows = {id = 0, txt = "Enter [EXACT] Name"}
+        rows =
+        {
+            id = 0,
+            txt = "Enter Case #"
+        }
     })
 
     if dialog[1].input == nil then
@@ -133,16 +162,14 @@ function DeleteWarrant()
             -- Enter custom Notifications here
         end
     else
-        local name = dialog[1].input
-        ESX.TriggerServerCallback('sickwarrant:CheckBeforeDelete',
-                                  function(name)
-            if name ~= nil then
-                TriggerServerEvent('sickwarrants:DeleteWarrant', name)
+        local case = dialog[1].input
+        ESX.TriggerServerCallback('sickwarrant:CheckBeforeDelete',function(case)
+            if case ~= nil then
+                TriggerServerEvent('sickwarrants:DeleteWarrant', case)
                 if Config.Notifications == "esx" then
                     ESX.ShowNotification(Config.DeletedWarrant)
                 elseif Config.Notifications == "mythic" then
-                    exports['mythic_notify']:DoHudText('error',
-                                                       Config.DeletedWarrant)
+                    exports['mythic_notify']:DoHudText('error',Config.DeletedWarrant)
                 elseif Config.Notifications == "custom" then
                     -- Enter custom Notifications here
                 end
@@ -150,8 +177,7 @@ function DeleteWarrant()
                 if Config.Notifications == "esx" then
                     ESX.ShowNotification(Config.NoWarrantWithName)
                 elseif Config.Notifications == "mythic" then
-                    exports['mythic_notify']:DoHudText('error',
-                                                       Config.NoWarrantWithName)
+                    exports['mythic_notify']:DoHudText('error',Config.NoWarrantWithName)
                 elseif Config.Notifications == "custom" then
                     -- Enter custom Notifications here
                 end

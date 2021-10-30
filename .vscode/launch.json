@@ -44,7 +44,11 @@
             "type": "lua",
             "request": "launch",
             "name": "Debug",
-            "program": "${workspaceFolder}/server/server.lua"
+            "workingDirectory": "${workspaceRoot}",
+            "listenPublicly": false,
+            "listenPort": 56789,
+            "program": "${workspaceFolder}/server/server.lua",
+            "encoding": "UTF-8"
         }
     ]
 }
