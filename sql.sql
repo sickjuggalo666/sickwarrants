@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `warrants6` (
+CREATE TABLE IF NOT EXISTS `warrants` (
     `case` INT(20) NOT NULL,
     `firstname` varchar(10) NOT NULL,
     `lastname` varchar(10) NOT NULL,
