@@ -94,7 +94,7 @@ function ShowCreateWarrantMenu()
     })
 
     if dialog ~= nil then
-        if dialog[1].input == nil or dialog[2].input == nil then
+        if dialog[1].input == nil or dialog[2].input == nil or dialog[3].input == nil or dialog[4].input == nil or dialog[5].input == nil then
             if Config.Notifications == "esx" then
                 ESX.ShowNotification(Config.InvalidInputs)
             elseif Config.Notifications == "mythic" then
