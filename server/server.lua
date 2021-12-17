@@ -1,75 +1,56 @@
 ESX = nil
-
 TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 
-ESX.RegisterServerCallback('sickwarrants:getActive', function(cb,case)
-    MySQL.Async.fetchAll('SELECT * FROM warrants WHERE case = @case',
+ESX.RegisterServerCallback('sickwarrants:getActive', function(source,cb,active)
+    MySQL.Async.fetchAll('SELECT * FROM warrants WHERE active = @active',
     {
-        ['@case'] = case
+        ['@active'] = 1
 
     }, function(results)
-        if results[1] then
-            local data = {
-                firstname    = results[1].firstname,
-                lastname     = results[1].lastname,
-                case         = results[1].case,
-                reason       = results[1].reason,
-                bday         = results[1].bday
-            }
-            cb(data)
+        if #results > 0 then
+            for i = 1, #results do
+                local data = {
+                    firstname    = results[i].firstname,
+                    lastname     = results[i].lastname,
+                    case         = results[i].case,
+                    reason       = results[i].reason,
+                    bday         = results[i].bday
+                }
+                cb(data)
+            end
         end
     end)
 end)
 
-RegisterServerEvent('sickwarrant:createWarrant')
-AddEventHandler('sickwarrant:createWarrant', function(firstname,lastname,case,bday,reason)
-    CreateWarrant(firstname,lastname,case,bday,reason)
+RegisterServerEvent('sickwarrants:createWarrant')
+AddEventHandler('sickwarrants:createWarrant', function(firstname,lastname,case,bday,reason)
+    MySQL.Async.execute('INSERT INTO warrants (firstname, lastname, `case`, bday, reason, active) VALUES (@firstname, @lastname, @case, @bday, @reason, @active)',{   
+        ['@firstname']      = firstname,
+        ['@lastname']       = lastname,
+        ['@case']           = case,
+        ['@bday']           = bday,
+        ['@reason']         = reason,
+        ['@active']         = 1,
+    })
 end)
-
-function CreateWarrant(firstname,lastname,case,bday,reason)
-    local query =
-    {
-        'INSERT INTO warrants (case,firstname,lastname,bday,reason) VALUES (@case,@firstname,@lastname,@bday,@reason)'
-    }
-    MySQL.Async.execute(query,
-        {
-            ['@case']           = case,
-            ['@firstname']      = firstname,
-            ['@lastname']       = lastname,
-            ['@bday']           = bday,
-            ['@reason']         = reason,
-
-        },function()
-    end)
-end
 
 RegisterServerEvent('sickwarrants:DeleteWarrant')
 AddEventHandler('sickwarrants:DeleteWarrant', function(case)
-    DeleteWarrant(case)
-end)
-
-function DeleteWarrant(case)
-    MySQL.Sync.execute('DELETE FROM warrants WHERE case = @case',
+    MySQL.Async.execute('DELETE FROM warrants WHERE `case` = @case',
         {
             ['@case'] = case,
         },function()
     end)
-end
+end)
 
-ESX.RegisterServerCallback('sickwarrant:CheckBeforeDelete', function(cb,case)
-    MySQL.Async.fetchAll('SELECT * FROM warrants WHERE case = @case',
-        {
-            ['@case'] = case
-
-        }, function(results)
-        if results[1] then
-            local check =
-                {
-                    case = results[1].case
-                }
-            cb(check)
+ESX.RegisterServerCallback('sickwarrants:CheckBeforeDelete', function(cb,case)
+    MySQL.Async.fetchAll('SELECT * FROM warrants WHERE `case` = @case',{
+        ['@case'] = case
+    }, function(case)
+        if case then
+            cb(true)
         else
-            cb(nil)
+            cb(false)
         end
     end)
 end)

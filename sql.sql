@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS `warrants` (
     `lastname` varchar(10) NOT NULL,
     `bday` varchar(15) NOT NULL,
     `reason` LONGTEXT NOT NULL,
+    `active` varchar(5) NOT NULL,
     CONSTRAINT `case` UNIQUE (`case`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
