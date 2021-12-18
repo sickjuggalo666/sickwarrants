@@ -3,54 +3,34 @@ TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 
 ESX.RegisterServerCallback('sickwarrants:getActive', function(source,cb,active)
     MySQL.Async.fetchAll('SELECT * FROM warrants WHERE active = @active',
-    {
-        ['@active'] = 1
-
-    }, function(results)
-        if #results > 0 then
-            for i = 1, #results do
-                local data = {
-                    firstname    = results[i].firstname,
-                    lastname     = results[i].lastname,
-                    case         = results[i].case,
-                    reason       = results[i].reason,
-                    bday         = results[i].bday
-                }
-                cb(data)
+    {['@active'] = 1}, function(results)
+        local active = {}
+            for i=1, #results do
+                table.insert(active,{name= results[i].firstname.." "..results[i].lastname,case= results[i].case,reason= results[i].reason,bday= results[i].bday})
             end
-        end
+        cb(active)
     end)
 end)
 
 RegisterServerEvent('sickwarrants:createWarrant')
 AddEventHandler('sickwarrants:createWarrant', function(firstname,lastname,case,bday,reason)
-    MySQL.Async.execute('INSERT INTO warrants (firstname, lastname, `case`, bday, reason, active) VALUES (@firstname, @lastname, @case, @bday, @reason, @active)',{   
-        ['@firstname']      = firstname,
-        ['@lastname']       = lastname,
-        ['@case']           = case,
-        ['@bday']           = bday,
-        ['@reason']         = reason,
-        ['@active']         = 1,
-    })
+    MySQL.Async.execute('INSERT INTO warrants (firstname, lastname, `case`, bday, reason, active) VALUES (@firstname, @lastname, @case, @bday, @reason, @active)',
+    {['@firstname'] = firstname,['@lastname'] = lastname,['@case'] = case,['@bday'] = bday,['@reason'] = reason,['@active'] = 1})
 end)
 
-RegisterServerEvent('sickwarrants:DeleteWarrant')
+RegisterServerEvent('sickwarrants:DeleteWarrant')  -- Used to Delete when a Case # is entered!
 AddEventHandler('sickwarrants:DeleteWarrant', function(case)
     MySQL.Async.execute('DELETE FROM warrants WHERE `case` = @case',
-        {
-            ['@case'] = case,
-        },function()
+    {['@case'] = case},function()
     end)
 end)
 
-ESX.RegisterServerCallback('sickwarrants:CheckBeforeDelete', function(cb,case)
-    MySQL.Async.fetchAll('SELECT * FROM warrants WHERE `case` = @case',{
-        ['@case'] = case
-    }, function(case)
-        if case then
-            cb(true)
-        else
-            cb(false)
-        end
+RegisterServerEvent('sickwarrants:DeleteWarrant1')  -- only cause the menu sends different data then the dialog menu 
+AddEventHandler('sickwarrants:DeleteWarrant1', function(data)  -- don't need this if you take out the delete through menus
+    print(data.case)
+    MySQL.Async.execute('DELETE FROM warrants WHERE `case` = @case',
+        {
+            ['@case'] = data.case,
+        },function()
     end)
 end)

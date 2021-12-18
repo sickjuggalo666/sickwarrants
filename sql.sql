@@ -9,5 +9,5 @@ CREATE TABLE IF NOT EXISTS `warrants` (
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
 INSERT INTO `warrants` (`case`, `firstname`, `lastname`, `bday`, `reason`) VALUES 
-    ('1212', 'Jack', 'Napier','08/15/1990','IDK Cause i feel like it!')
-;
+    ('1212', 'Jack', 'Napier','04/20/1420','IDK Cause i feel like it!')
+; 

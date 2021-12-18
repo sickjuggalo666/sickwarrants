@@ -2,7 +2,7 @@ fx_version 'bodacious'
 games { 'rdr3', 'gta5' }
 
 mod 'sickwarrants'
-version '1.1.4'
+version '1.1.0'
 
 shared_scripts {
     'config.lua'
