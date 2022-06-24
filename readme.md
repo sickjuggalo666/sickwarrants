@@ -12,6 +12,11 @@ Put `ensure sickwarrants` in server.cfg
 
 And set warrants!
 
-Doesn't do anything except set it be seen in menus! if you want you can use the DB data to pull info for you to use!
+Civilian Players can check for warrants at any spot you put the export! it will open based on if they are police or not. If they are not they will be able to view the 
+warrants but nothing else. This is good for people to see if they have an active warrant or not!
+
+I set it up to work with Deltarix MDT and there is a config option for this.
+
+you can also now change the few notifications on the client side to anything you would like! some are set up alread I.E. OkOKNotify Mythic ESX and more! Be sure to check Config!
 
 ## Enjoy!!! ##
