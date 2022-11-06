@@ -20,3 +20,8 @@ I set it up to work with Deltarix MDT and there is a config option for this.
 you can also now change the few notifications on the client side to anything you would like! some are set up alread I.E. OkOKNotify Mythic ESX and more! Be sure to check Config!
 
 ## Enjoy!!! ##
+
+
+## Support!! ##
+
+https://discord.gg/6j2M8hbP2G
