@@ -1,6 +1,6 @@
 fx_version 'bodacious'
 games { 'rdr3', 'gta5' }
-lua54
+lua54 'yes'
 
 mod 'sickwarrants'
 version '2.0.0'
