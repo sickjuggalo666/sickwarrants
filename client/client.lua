@@ -291,4 +291,4 @@ function Notify(noty_type, message)
     end
 end
 
-exports("WarrantMenu", WarrantMenu())
+exports("WarrantMenu", WarrantMenu)
