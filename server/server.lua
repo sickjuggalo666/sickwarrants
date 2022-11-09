@@ -13,7 +13,7 @@ ESX.RegisterServerCallback('sickwarrants:getActiveVeh', function(source,cb,activ
             local active = {}
                 for i=1, #results do
                     table.insert(active,{
-                        name    = string.format(results[i].firstname..' '..results[i].lastname) 
+                        name    = string.format(results[i].firstname..' '..results[i].lastname),
                         case    = results[i].case,
                         reason  = results[i].reason,
                         bday    = results[i].bday
