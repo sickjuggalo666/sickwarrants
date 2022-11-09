@@ -106,7 +106,7 @@ function WarrantMenu()
     else 
 	exports['zf_context']:openMenu(CivWarrantMenu)
     end
-end)
+end
 
 RegisterNetEvent('SickWarrantsMenu:optionList')
 AddEventHandler('SickWarrantsMenu:optionList', function(args)
