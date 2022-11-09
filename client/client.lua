@@ -25,8 +25,7 @@ local jobsAuth = {
 	['bcso'] = true,
 }
 
-RegisterNetEvent('sickwarrants:warrantMenu')
-AddEventHandler('sickwarrants:warrantMenu',function()
+function WarrantMenu() 
     local WarrantMenu = {
         {
             id = 0,
@@ -291,3 +290,5 @@ function Notify(noty_type, message)
         end
     end
 end
+
+exports("WarrantMenu", WarrantMenu())
