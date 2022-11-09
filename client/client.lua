@@ -100,12 +100,13 @@ AddEventHandler('sickwarrants:warrantMenu',function()
                 }
             }
         }
-    )
+     )
+    end
     if jobsAuth[PlayerData.job.name] then
-		exports['zf_context']:openMenu(WarrantMenu)
-	else 
-		exports['zf_context']:openMenu(CivWarrantMenu)
-	end
+	exports['zf_context']:openMenu(WarrantMenu)
+    else 
+	exports['zf_context']:openMenu(CivWarrantMenu)
+    end
 end)
 
 RegisterNetEvent('SickWarrantsMenu:optionList')
