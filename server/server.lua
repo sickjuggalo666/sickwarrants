@@ -4,7 +4,7 @@ TriggerEvent('esx:getSharedObject', function(obj)
     ESX = obj
 end)
 
-ESX.RegisterServerCallback('sickwarrants:getActiveVeh', function(source,cb,active)
+ESX.RegisterServerCallback('sickwarrants:getActive', function(source,cb,active)
     if not Config.UseMDT then
         MySQL.Async.fetchAll('SELECT * FROM warrants WHERE active = @active',
         {
