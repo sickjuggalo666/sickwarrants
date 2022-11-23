@@ -2,9 +2,9 @@
 
 Thanks for using my warrant system! its super simple to use and set up for your server!
 
-Simply add the export into anything you want to trigger it from. Be it from Police Menus or City Halls!
+Simply add the event into anything you want to trigger it from. Be it from Police Menus or City Halls!
 
-## { exports['sickwarrants']:WarrantMenu() } ##
+## { TriggerEvent('sickwarrants:warrantMenu') } ##
 
 Make sure to run the sql!
 
@@ -25,3 +25,5 @@ you can also now change the few notifications on the client side to anything you
 ## Support!! ##
 
 https://discord.gg/6j2M8hbP2G
+
+Support for Deltarex MDW in discord
