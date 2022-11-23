@@ -5,7 +5,6 @@ TriggerEvent('esx:getSharedObject', function(obj)
 end)
 
 ESX.RegisterServerCallback('sickwarrants:getActive', function(source,cb,active)
-    if not Config.UseMDT then
         MySQL.Async.fetchAll('SELECT * FROM warrants WHERE active = @active',
         {
             ['@active'] = 1,
@@ -20,45 +19,8 @@ ESX.RegisterServerCallback('sickwarrants:getActive', function(source,cb,active)
                     })
                 end
             cb(active)
-        end)
-    else
-        MySQL.Async.fetchAll('SELECT * FROM drx_mdt_warrants WHERE type = @type', -- could prolly set it to your MDT system but some edits might be needed. this is ONLY MDT i will
-            {                                                                     -- support at this time! 
-                ['@type'] = 'person'
-            }, function(results)
-            local active = {}
-                for i=1, #results do
-                    table.insert(active,{
-                        name    = results[i].victim,  -- if you do change your MDT query make sure to leave the first variable as is so its easier to read client side
-                        case    = results[i].title,   -- ex: name(stays the same) = results[i].(what your column name would be)
-                        reason  = results[i].incident, -- this is cause client reads the (name) part and feeds the data. you CAN change these as long as you change them 
-                        bday    = results[i].date       -- client side as well!!!
-                    })
-                end
-            cb(active)
-        end)
-    end
+       end)
 end)
-
-if Config.UseMDT then -- if you use Deltarix MDT and are going to use the warrants there this is for vehicles! 
-    ESX.RegisterServerCallback('sickwarrants:getActiveVeh', function(source,cb,active)
-        MySQL.Async.fetchAll('SELECT * FROM drx_mdt_warrants WHERE type = @type',
-        {
-            ['@type'] = 'veh'
-        }, function(results)
-            local active = {}
-                for i=1, #results do
-                    table.insert(active,{
-                        name    = results[i].victim,
-                        case    = results[i].title,
-                        reason  = results[i].incident,
-                        plate    = results[i].plate
-                    })
-                end
-            cb(active)
-        end)
-    end)
-end
 
 RegisterServerEvent('sickwarrants:createWarrant')
 AddEventHandler('sickwarrants:createWarrant', function(firstname,lastname,case,bday,reason)
