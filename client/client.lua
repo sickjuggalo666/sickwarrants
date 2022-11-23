@@ -85,22 +85,6 @@ function WarrantMenu()
             }
         },
     }
-    if Config.UseMDT then 
-        table.insert(CivWarrantMenu,{
-            {
-                id = 2,
-                header = '📲 List Vehicle Warrants',
-                txt = 'List Vehicle Warrants',
-                params = {
-                    event = 'SickWarrantsMenu:optionList',
-                    args = {
-                        selection = 'list_veh_warrants'
-                    }
-                }
-            }
-        }
-     )
-    end
     if jobsAuth[PlayerData.job.name] then
 	exports['zf_context']:openMenu(WarrantMenu)
     else 
@@ -118,8 +102,6 @@ AddEventHandler('SickWarrantsMenu:optionList', function(args)
         ShowCreateWarrantMenu()
     elseif args.selection == 'list_warrants' then
         WarrantList()
-    elseif args.selection == 'list_veh_warrants' then -- only if using MDT option
-        VehWarrantList()
     end
 end)
 
@@ -154,11 +136,11 @@ function ShowCreateWarrantMenu() -- if using the MDT option you will not need th
         if dialog[1].input == nil or dialog[2].input == nil or dialog[3].input == nil or dialog[4].input == nil or dialog[5].input == nil then
             Notify(3, "Dialog Bars Cannot be Empty!")
         else
-            firstname = dialog[1].input
-            lastname  = dialog[2].input
-            case      = dialog[3].input
-            bday = dialog[4].input
-            reason = dialog[5].input
+            firstname = dialog[1].input,
+            lastname  = dialog[2].input,
+            case      = dialog[3].input,
+            bday = dialog[4].input,
+            reason = dialog[5].input,
             TriggerServerEvent('sickwarrants:createWarrant', firstname, lastname, case, bday, reason)
         end
     end
@@ -212,29 +194,6 @@ function CivWarrantList()
                 counter = counter+1
             end
         exports['zf_context']:openMenu(WCL)
-    end)
-end
-
-function VehWarrantList() -- ONLY used with the MDT!!!!!!!
-    ESX.TriggerServerCallback('sickwarrants:getActiveVeh', function(active)
-        local counter = 2
-        local VWL = {
-                {
-                    id = 1,
-                    header = 'Active Vehicle Warrants',
-                    txt = 'N.C.I.C',
-                }
-            }
-            for i = 1, #active do
-                table.insert(VWL,{
-                    id = counter,
-                    header = active[i].name..', Plate: '..active[i].plate..',  Case: '..active[i].case, -- this is where the server side query reads the data. if you change server side
-                    txt = "Reason: "..active[i].reason,                                                 -- info make sure to change these to match!!
-                    params = {}
-                })
-                counter = counter+1
-            end
-        exports['zf_context']:openMenu(VWL)
     end)
 end
 
