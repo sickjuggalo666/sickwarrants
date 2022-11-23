@@ -24,8 +24,8 @@ local jobsAuth = {
 	['police'] = true,
 	['bcso'] = true,
 }
-
-function WarrantMenu() 
+RegisterNetEvent('sickwarrants:warrantMenu')
+AddEventHandler('sickwarrants:warrantMenu',function()
     local WarrantMenu = {
         {
             id = 0,
@@ -90,7 +90,7 @@ function WarrantMenu()
     else 
 	exports['zf_context']:openMenu(CivWarrantMenu)
     end
-end
+end)
 
 RegisterNetEvent('SickWarrantsMenu:optionList')
 AddEventHandler('SickWarrantsMenu:optionList', function(args)
