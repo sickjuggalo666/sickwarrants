@@ -32,7 +32,28 @@ AddEventHandler('sickwarrants:createWarrant', function(firstname,lastname,case,b
         ['@bday']       = bday,
         ['@reason']     = reason,
         ['@active']     = 1
-    })
+    },function(result)
+      if result then
+        Notify(1,"Warrant has been Set for Case: "..case)
+      else
+        Notify(3, "Warrant wasn\'t able to be set Please try again!")
+      end
+    end)
+end)
+
+RegisterServerEvent('sickwarrants:setBounty')
+AddEventHandler('sickwarrants:setBounty', function(amount,case)
+    MySQL.Async.execute('UPDATE warrants SET bounty WHERE case =@case',
+    {
+        ['@case']       = case,
+        ['@bounty']       = amount,
+    },function(result)
+      if result then
+        Notify(1,"Bounty has been Set for Case: "..case)
+      else
+        Notify(3, "Bounty wasn\'t able to be set Please try again!")
+      end
+    end)
 end)
 
 RegisterServerEvent('sickwarrants:DeleteWarrant')  -- Used to Delete when a Case # is entered!
@@ -40,7 +61,12 @@ AddEventHandler('sickwarrants:DeleteWarrant', function(case)
     MySQL.Async.execute('DELETE FROM warrants WHERE `case` = @case',
     {
         ['@case'] = case
-    },function()
+    },function(result)
+       if result then
+         Notify(1, "Warrant was deleted Successfully!")
+       else
+         Notify(3, "Warrant wasn\'t Deleted please try again!")
+       end
     end)
 end)
 
