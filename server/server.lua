@@ -37,7 +37,7 @@ AddEventHandler('sickwarrants:createWarrant', function(firstname,lastname,case,b
         ['@active']     = 1
     },function(result)
       if result then
-        Notify(1, src,"Warrant has been Set for Case: "..case)
+        Notify(1, src, "Warrant has been Set for Case: "..case)
       else
         Notify(3, src, "Warrant wasn\'t able to be set Please try again!")
       end
