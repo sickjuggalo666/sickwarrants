@@ -26,7 +26,8 @@ local jobsAuth = {
 }
 
 local BountyJobs = {
-      ['bondsman'] = true
+      ['bondsman'] = true,
+      ['police'] = true
 }
 
 RegisterNetEvent('sickwarrants:warrantMenu')
