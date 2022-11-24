@@ -14,5 +14,5 @@ INSERT INTO `warrants` (`case`, `firstname`, `lastname`, `bday`, `reason` `bount
 ;
 
 ALTER TABLE `warrants`
-  ADD IF NOT EXIST `bounty` varchar(15) DEFAULT 0
+  ADD IF NOT EXISTS `bounty` varchar(15) DEFAULT 0
 ;
