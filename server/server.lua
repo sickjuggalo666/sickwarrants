@@ -15,7 +15,8 @@ ESX.RegisterServerCallback('sickwarrants:getActive', function(source,cb,active)
                         name    = string.format(results[i].firstname..' '..results[i].lastname),
                         case    = results[i].case,
                         reason  = results[i].reason,
-                        bday    = results[i].bday
+                        bday    = results[i].bday,
+                        bounty  = results[i].bounty
                     })
                 end
             cb(active)
