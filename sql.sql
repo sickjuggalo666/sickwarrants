@@ -5,9 +5,14 @@ CREATE TABLE IF NOT EXISTS `warrants` (
     `bday` varchar(15) NOT NULL,
     `reason` LONGTEXT NOT NULL,
     `active` varchar(5) NOT NULL,
+    `bounty` varchar(15) DEFAULT 0,
     CONSTRAINT `case` UNIQUE (`case`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
-INSERT INTO `warrants` (`case`, `firstname`, `lastname`, `bday`, `reason`) VALUES 
-    ('1212', 'Jack', 'Napier','04/20/1420','IDK Cause i feel like it!')
-; 
+INSERT INTO `warrants` (`case`, `firstname`, `lastname`, `bday`, `reason` `bounty`) VALUES 
+    ('1212', 'Jack', 'Napier','04/20/1420','IDK Cause i feel like it!', 5000)
+;
+
+ALTER TABLE `warrants`
+  ADD IF NOT EXIST `bounty` varchar(15) DEFAULT 0
+;
