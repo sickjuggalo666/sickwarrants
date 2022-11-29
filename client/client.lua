@@ -119,7 +119,7 @@ function EnterBountyAmount(case)
         if BountyAmount[1].input == nil then
             Notify(3, "Dialog Bars Cannot be Empty!")
         else
-            amount = BountyAmount[1].input,
+            amount = BountyAmount[1].input
             
             TriggerServerEvent('sickwarrants:setBounty', amount, case)
         end
@@ -140,7 +140,7 @@ function SetWarrantOptions(case)
             params = {
                 event = 'SickWarrantsMenu:optionList',
                 args = {
-                    selection = 'delete'
+                    selection = 'delete',
                     case = case
                 }
             }
@@ -159,7 +159,7 @@ function SetWarrantOptions(case)
             params = {
                 event = 'SickWarrantsMenu:optionList',
                 args = {
-                    selection = 'set_bounty'
+                    selection = 'set_bounty',
                     case = case
                 }
             }
@@ -171,7 +171,7 @@ function SetWarrantOptions(case)
             params = {
                 event = 'SickWarrantsMenu:optionList',
                 args = {
-                    selection = 'delete'
+                    selection = 'delete',
                     case = case
                 }
             }
@@ -215,11 +215,11 @@ function ShowCreateWarrantMenu() -- if using the MDT option you will not need th
         if dialog[1].input == nil or dialog[2].input == nil or dialog[3].input == nil or dialog[4].input == nil or dialog[5].input == nil then
             Notify(3, "Dialog Bars Cannot be Empty!")
         else
-            firstname = dialog[1].input,
-            lastname  = dialog[2].input,
-            case      = dialog[3].input,
-            bday = dialog[4].input,
-            reason = dialog[5].input,
+            firstname = dialog[1].input
+            lastname  = dialog[2].input
+            case      = dialog[3].input
+            bday = dialog[4].input
+            reason = dialog[5].input
             TriggerServerEvent('sickwarrants:createWarrant', firstname, lastname, case, bday, reason)
         end
     end
