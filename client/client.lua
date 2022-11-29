@@ -291,7 +291,7 @@ function DeleteWarrant(case)
                 event = 'SickWarrantsMenu:optionList',
                 isServer = true,
                 args = {
-                    selection = 'delete'
+                    selection = 'delete',
                     case = case
                 }
             }
