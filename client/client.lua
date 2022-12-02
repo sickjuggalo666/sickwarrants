@@ -244,6 +244,7 @@ function WarrantList() --for police checking
                         event = 'SickWarrantsMenu:optionList',  
                         --isServer = true,
                         args = {
+                            selection = 'warrant_choices',
                             case = active[i].case,
                         }
                     }
