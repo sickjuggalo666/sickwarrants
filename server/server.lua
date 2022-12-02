@@ -48,7 +48,7 @@ RegisterServerEvent('sickwarrants:setBounty')
 AddEventHandler('sickwarrants:setBounty', function(amount,case)
     local src = source
     local xPlayer = ESX.GetPlayerFromId(src)
-    MySQL.Async.execute('UPDATE warrants SET bounty WHERE case =@case',
+    MySQL.Async.execute('UPDATE warrants SET bounty = @bounty WHERE `case` =@case',
     {
         ['@case']       = case,
         ['@bounty']       = amount,
