@@ -86,7 +86,7 @@ AddEventHandler('sickwarrants:DeleteWarrant1', function(data)  -- don't need thi
     end)
 end)
 
-function Notification(source, noty_type, message)
+function Notify(source, noty_type, message)
     if source and noty_type and message then
         if Config.NotificationType.server == 'esx' then
             TriggerClientEvent('esx:showNotification', source, message)
