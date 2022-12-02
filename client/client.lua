@@ -268,7 +268,7 @@ function CivWarrantList()
                 },
             }
             for i=1, #active do
-                local BountAmount = ('%s <span style="color:MediumSeaGreen;">[ %s ]</span>'):format(active[i].name,active[i].bounty)
+                local BountyAmount = ('%s <span style="color:MediumSeaGreen;">, Bounty: $[ %s ]</span>'):format(active[i].name,active[i].bounty)
                 table.insert(WCL, {
                     id = counter,
                     header = BountyAmount..',  Date: '..active[i].bday..'  Case: '..active[i].case, -- this is where the server side query reads the data. if you change server side
