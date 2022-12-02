@@ -105,6 +105,7 @@ AddEventHandler('SickWarrantsMenu:optionList', function(args)
 end)
 
 function EnterBountyAmount(case)
+print('first check' ..case)
    local BountyAmount = exports['zf_dialog']:DialogInput({
         header = "Create Warrant",
         rows = {
@@ -120,7 +121,8 @@ function EnterBountyAmount(case)
             Notify(3, "Dialog Bars Cannot be Empty!")
         else
             amount = BountyAmount[1].input
-            
+            case = case
+            print('Amount: '..amount.. ', Case: '..case)
             TriggerServerEvent('sickwarrants:setBounty', amount, case)
         end
     end
