@@ -20,16 +20,6 @@ AddEventHandler('esx:setJob', function(job)
 	PlayerData.job = job
 end)
 
-local jobsAuth = {
-	['police'] = true,
-	['bcso'] = true,
-}
-
-local BountyJobs = {
-      ['bondsman'] = true,
-      ['police'] = true
-}
-
 RegisterNetEvent('sickwarrants:warrantMenu')
 AddEventHandler('sickwarrants:warrantMenu',function()
     local WarrantMenu = {
@@ -80,7 +70,7 @@ AddEventHandler('sickwarrants:warrantMenu',function()
             }
         },
     }
-    if jobsAuth[PlayerData.job.name] then
+    if Config.jobsAuth[PlayerData.job.name] then
 	exports['zf_context']:openMenu(WarrantMenu)
     else 
 	exports['zf_context']:openMenu(CivWarrantMenu)
@@ -179,7 +169,7 @@ function SetWarrantOptions(case)
             }
         },
     }
-    if BountyJobs[PlayerData.job.name] then
+    if Config.BountyJobs[PlayerData.job.name] then
 	exports['zf_context']:openMenu(SetBounty)
     else 
 	exports['zf_context']:openMenu(DeleteWarrant)
