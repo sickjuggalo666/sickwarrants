@@ -518,6 +518,7 @@ function DeleteWarrant(case)
     end
 end
 
+
 function Notify(noty_type, message)
     if noty_type and message then
         if Config.NotificationType.client == 'esx' then

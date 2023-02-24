@@ -4,6 +4,7 @@ TriggerEvent('esx:getSharedObject', function(obj)
     ESX = obj
 end)
 
+
 ESX.RegisterServerCallback('sickwarrants:getActive', function(source,cb,active)
         MySQL.Async.fetchAll('SELECT * FROM warrants WHERE active = @active',
         {
