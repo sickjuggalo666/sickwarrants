@@ -45,16 +45,17 @@ AddEventHandler('sickwarrants:createWarrant', function(firstname,lastname,case,b
 end)
 
 RegisterServerEvent('sickwarrants:setBounty')
-AddEventHandler('sickwarrants:setBounty', function(amount,case)
+AddEventHandler('sickwarrants:setBounty', function(case,amount)
+    print("serverbounty",amount,case)
     local src = source
     local xPlayer = ESX.GetPlayerFromId(src)
-    MySQL.Async.execute('UPDATE warrants SET bounty = @bounty WHERE `case` =@case',
+    MySQL.Async.execute('UPDATE warrants SET bounty =@bounty WHERE `case` =@case',
     {
         ['@case']       = case,
-        ['@bounty']       = amount,
+        ['@bounty']       = tonumber(amount),
     },function(result)
       if result then
-        Notify(1, src, "Bounty has been Set for Case: "..case)
+        Notify(1, src, "Bounty has been Set for Case: "..case.. "Amount $"..amount)
       else
         Notify(3, src, "Bounty wasn\'t able to be set Please try again!")
       end
@@ -79,10 +80,17 @@ end)
 
 RegisterServerEvent('sickwarrants:DeleteWarrant1')  -- only cause the menu sends different data then the dialog menu 
 AddEventHandler('sickwarrants:DeleteWarrant1', function(data)  -- don't need this if you take out the delete through menus
+    local src = source
+    local xPlayer = ESX.GetPlayerFromId(src)
     MySQL.Async.execute('DELETE FROM warrants WHERE `case` = @case',
-        {
-            ['@case'] = data.case,
-        },function()
+    {
+        ['@case'] = data.case
+    },function(result)
+       if result then
+         Notify(1, src, "Warrant was deleted Successfully!")
+       else
+         Notify(3, src, "Warrant wasn\'t Deleted please try again!")
+       end
     end)
 end)
 

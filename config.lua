@@ -2,6 +2,8 @@ Config = {}
 
 Config.CheckVersion = true -- do you wanna stay up to date? will print in server console
 
+Config.MenuType = 'ox_libs'
+
 Config.jobsAuth = {
 	['police'] = true,
 	['bcso'] = true,
