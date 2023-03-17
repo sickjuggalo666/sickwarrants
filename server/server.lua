@@ -4,7 +4,6 @@ TriggerEvent('esx:getSharedObject', function(obj)
     ESX = obj
 end)
 
-
 ESX.RegisterServerCallback('sickwarrants:getActive', function(source,cb,active)
         MySQL.Async.fetchAll('SELECT * FROM warrants WHERE active = @active',
         {
@@ -46,14 +45,14 @@ AddEventHandler('sickwarrants:createWarrant', function(firstname,lastname,case,b
 end)
 
 RegisterServerEvent('sickwarrants:setBounty')
-AddEventHandler('sickwarrants:setBounty', function(case,amount)
+AddEventHandler('sickwarrants:setBounty', function(amount, case)
     print("serverbounty",amount,case)
     local src = source
     local xPlayer = ESX.GetPlayerFromId(src)
-    MySQL.Async.execute('UPDATE warrants SET bounty =@bounty WHERE `case` =@case',
+    MySQL.update('UPDATE warrants SET bounty = @bounty WHERE `case` = @case',
     {
         ['@case']       = case,
-        ['@bounty']       = tonumber(amount),
+        ['@bounty']       = amount,
     },function(result)
       if result then
         Notify(1, src, "Bounty has been Set for Case: "..case.. "Amount $"..amount)
@@ -67,7 +66,7 @@ RegisterServerEvent('sickwarrants:DeleteWarrant')  -- Used to Delete when a Case
 AddEventHandler('sickwarrants:DeleteWarrant', function(case)
     local src = source
     local xPlayer = ESX.GetPlayerFromId(src)
-    MySQL.Async.execute('DELETE FROM warrants WHERE `case` = @case',
+    MySQL.update('DELETE FROM warrants WHERE `case` = @case',
     {
         ['@case'] = case
     },function(result)

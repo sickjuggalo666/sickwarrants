@@ -115,7 +115,7 @@ AddEventHandler('sickwarrants:warrantMenu',function()
             }
         },
     }
-    if jobsAuth[PlayerData.job.name] then
+    if Config.jobsAuth[PlayerData.job.name] then
         if Config.MenuType == 'ox_libs' then
             lib.showContext('WarrantMenu')
         elseif Config.MenuType =='zf_context' then
@@ -161,8 +161,9 @@ function EnterBountyAmount(case)
             lib.hideContext(false) 
             return
         end
-        amount = input[1]
-        case = case
+        local amount = input[1]
+        local case = case
+        print('Client: ', amount, case)
         TriggerServerEvent('sickwarrants:setBounty', amount, case)
     elseif Config.MenuType == 'zf_context' then
         local BountyAmount = exports['zf_dialog']:DialogInput({
@@ -216,7 +217,7 @@ function SetWarrantOptions(case)
                 description = 'Add a Bounty for this Warrant!',
                 arrow = true,
                 event = 'SickWarrantsMenu:optionList',
-                args = {selection = 'set_bounty'},
+                args = {selection = 'set_bounty', case = case},
                 metadata = {
                     {label = 'Case #', value = case}
                 }
@@ -285,9 +286,9 @@ function SetWarrantOptions(case)
                 }
             },
         }
-    if BountyJobs[PlayerData.job.name] then
+    if Config.BountyJobs[PlayerData.job.name] then
         if Config.MenuType == 'ox_libs' then
-            lib.showContext('deleteBounty')
+            lib.showContext('SetBounty')
         elseif Config.MenuType =='zf_context' then
 	        exports['zf_context']:openMenu(SetBounty)
         end
@@ -518,7 +519,6 @@ function DeleteWarrant(case)
     end
 end
 
-
 function Notify(noty_type, message)
     if noty_type and message then
         if Config.NotificationType.client == 'esx' then
@@ -555,4 +555,3 @@ end
 exports("WarrantMenu", function()
     TriggerEvent('sickwarrants:warrantMenu')
 end)
-
