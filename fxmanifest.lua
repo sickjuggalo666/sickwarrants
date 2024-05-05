@@ -3,7 +3,7 @@ games { 'rdr3', 'gta5' }
 lua54 'yes'
 
 mod 'sickwarrants'
-version '1.3.0'
+version '2.0.0'
 
 shared_scripts {
     '@ox_lib/init.lua',
@@ -22,4 +22,10 @@ server_scripts {
 
 exports {
     'WarrantMenu'
+}
+
+escrow_ignore {
+    'client/*.lua',
+    'server/*.lua',
+    'config.lua'
 }
