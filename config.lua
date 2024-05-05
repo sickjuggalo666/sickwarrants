@@ -1,21 +1,25 @@
 Config = {}
 
+Config.Framework = 'QBCore' -- 'ESX' or 'QBCore'
+
+Config.MenuType = 'ox_libs' -- 'ox_libs', 'zf_context', 'qb_menu'
+
 Config.CheckVersion = true -- do you wanna stay up to date? will print in server console
-
-Config.MenuType = 'ox_libs'
-
 
 Config.jobsAuth = {
 	['police'] = true,
 	['bcso'] = true,
 }
 
+Config.PoliceJobs = { -- only for command
+    'police'
+}
 Config.BountyJobs = {
       ['bondsman'] = true,
       ['police'] = true
 }
 
-Config.NotificationType = { --['okokNotify' / 'mythic' / 'esx' / 'chat' / 'custom' ]
-    client = 'okokNotify', 
-    server = 'okokNotify'
+Config.NotificationType = { --['okokNotify' / 'mythic' / 'esx' / 'chat' / 'QBCore' / 'ox' / 'custom' ]
+    client = 'ox', 
+    server = 'ox'
 }

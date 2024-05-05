@@ -3,7 +3,7 @@ games { 'rdr3', 'gta5' }
 lua54 'yes'
 
 mod 'sickwarrants'
-version '1.2.0'
+version '1.3.0'
 
 shared_scripts {
     '@ox_lib/init.lua',
