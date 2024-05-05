@@ -67,7 +67,6 @@ end)
 
 RegisterServerEvent('sickwarrants:setBounty')
 AddEventHandler('sickwarrants:setBounty', function(amount, case)
-    print("serverbounty",amount,case)
     local src = source
     MySQL.update('UPDATE warrants SET bounty = @bounty WHERE `case` = @case',
     {
