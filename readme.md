@@ -25,3 +25,7 @@ you can also now change the few notifications on the client side to anything you
 ## Support!! ##
 
 https://discord.gg/6j2M8hbP2G
+
+## Documentation!! ##
+
+https://docs.sickscripts.shop/
