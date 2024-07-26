@@ -28,4 +28,4 @@ https://discord.gg/6j2M8hbP2G
 
 ## Documentation!! ##
 
-https://docs.sickscripts.shop/
+https://docs.sickscripts.com/
